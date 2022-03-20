@@ -8,20 +8,23 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavController
 import com.loylabs.app_with_composable.ui.navigation.AppScreens
+import com.loylabs.app_with_composable.ui.screens.first.FirstScreenViewModel
 
 @Composable
 fun NavigationButton(
     navController: NavController,
-    destination: AppScreens,
+    viewModel: FirstScreenViewModel,
+    screen: AppScreens<*>,
     modifier: Modifier = Modifier
 ) {
     Button(
         onClick = {
-            Log.i(destination.name, "Navigate to screen 1")
-            navController.navigate(destination.name)
+            Log.i(screen.screenKey, "Navigate to screen 1")
+            viewModel.onEvent()
+            navController.navigate(screen.screenKey)
         },
         modifier = modifier.fillMaxWidth()
     ) {
-        Text(text = "Go to ${destination.title}")
+        Text(text = "Go to ${screen.screenKey}")
     }
 }

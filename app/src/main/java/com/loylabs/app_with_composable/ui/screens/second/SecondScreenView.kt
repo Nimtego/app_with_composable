@@ -9,17 +9,20 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.loylabs.app_with_composable.ui.common.MyScreenTitle
 import com.loylabs.app_with_composable.ui.common.NavigationButton
+import com.loylabs.app_with_composable.ui.common.PrimaryButton
 import com.loylabs.app_with_composable.ui.navigation.AppScreens
+import com.loylabs.app_with_composable.ui.navigation.NavRoute
 import com.loylabs.app_with_composable.ui.theme.ComposeTheme
 
 @Composable
-fun SecondScreen(navController: NavController, secondScreenViewModel: SecondScreenViewModel) {
+fun SecondScreen(viewModel: SecondScreenViewModel) {
 
-    val title = secondScreenViewModel.title.collectAsState(initial = "")
+    val title = viewModel.title.collectAsState(initial = "")
 
     Column(
         modifier = Modifier
@@ -27,9 +30,10 @@ fun SecondScreen(navController: NavController, secondScreenViewModel: SecondScre
             .background(Color.LightGray),
         verticalArrangement = Arrangement.Bottom
     ) {
-        NavigationButton(
-            navController,
-            AppScreens.ScreenFirst)
+        PrimaryButton(
+            viewModel::onEvent,
+            "Test second title"
+        )
     }
     Column(
         modifier = Modifier.fillMaxHeight(),
@@ -39,13 +43,13 @@ fun SecondScreen(navController: NavController, secondScreenViewModel: SecondScre
     }
 }
 
-@Preview(showBackground = true)
-@Composable
-fun SecondScreenPreview() {
-    ComposeTheme {
-        val navController = rememberNavController()
-        val secondScreenViewModel = SecondScreenViewModel()
-
-        SecondScreen(navController, secondScreenViewModel)
-    }
-}
+//@Preview(showBackground = true)
+//@Composable
+//fun SecondScreenPreview() {
+//    ComposeTheme {
+//        val navController = rememberNavController()
+//        val secondScreenViewModel = SecondScreenViewModel()
+//
+//        SecondScreen(navController, secondScreenViewModel)
+//    }
+//}
