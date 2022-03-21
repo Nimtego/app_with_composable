@@ -16,7 +16,7 @@ import androidx.navigation.compose.composable
  */
 interface NavRoute<T : RouteNavigator> {
 
-    val screenKey: String
+    val screenKey: String get() = this::class.java.name
 
     /**
      * Returns the screen's content.

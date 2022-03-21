@@ -16,7 +16,9 @@ import com.loylabs.app_with_composable.ui.common.MyScreenTitle
 import com.loylabs.app_with_composable.ui.common.NavigationButton
 import com.loylabs.app_with_composable.ui.common.PrimaryButton
 import com.loylabs.app_with_composable.ui.navigation.AppScreens
+import com.loylabs.app_with_composable.ui.navigation.MyRouteNavigator
 import com.loylabs.app_with_composable.ui.navigation.NavRoute
+import com.loylabs.app_with_composable.ui.screens.first.FirstScreenViewModel
 import com.loylabs.app_with_composable.ui.theme.ComposeTheme
 
 @Composable
@@ -43,13 +45,11 @@ fun SecondScreen(viewModel: SecondScreenViewModel) {
     }
 }
 
-//@Preview(showBackground = true)
-//@Composable
-//fun SecondScreenPreview() {
-//    ComposeTheme {
-//        val navController = rememberNavController()
-//        val secondScreenViewModel = SecondScreenViewModel()
-//
-//        SecondScreen(navController, secondScreenViewModel)
-//    }
-//}
+@Preview(showBackground = true)
+@Composable
+fun SecondScreenPreview() {
+    ComposeTheme {
+        val viewModel = SecondScreenViewModel(MyRouteNavigator())
+        SecondScreen(viewModel)
+    }
+}
