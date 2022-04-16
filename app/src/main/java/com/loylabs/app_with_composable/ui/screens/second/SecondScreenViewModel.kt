@@ -1,8 +1,10 @@
 package com.loylabs.app_with_composable.ui.screens.second
 
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.loylabs.app_with_composable.ui.navigation.FirstScreen
+import com.loylabs.app_with_composable.ui.base.BaseEvent
+import com.loylabs.app_with_composable.ui.base.BaseViewModel
+import com.loylabs.app_with_composable.ui.base.FeatureEvent
+import com.loylabs.app_with_composable.ui.navigation.AppScreens
 import com.loylabs.app_with_composable.ui.navigation.RouteNavigator
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.delay
@@ -15,7 +17,7 @@ import javax.inject.Inject
 @HiltViewModel
 class SecondScreenViewModel @Inject constructor(
     private val routeNavigator: RouteNavigator
-) : ViewModel(), RouteNavigator by routeNavigator {
+) : BaseViewModel<BaseEvent>(), RouteNavigator by routeNavigator {
 
     private val _title: MutableSharedFlow<String> = MutableStateFlow("Second Screen")
     val title: Flow<String> = _title
@@ -30,7 +32,13 @@ class SecondScreenViewModel @Inject constructor(
         }
     }
 
-    fun onEvent() {
-        routeNavigator.navigateToRoute(FirstScreen)
+    override fun onEvent(event: BaseEvent) {
+        when(event) {
+            BaseEvent.ListCompositeItem -> routeNavigator.navigateToRoute(AppScreens.ListScreen)
+        }
     }
+
+//    fun onEvent() {
+//        routeNavigator.navigateToRoute(FirstScreen)
+//    }
 }

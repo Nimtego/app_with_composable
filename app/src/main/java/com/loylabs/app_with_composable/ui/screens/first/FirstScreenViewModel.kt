@@ -1,10 +1,13 @@
 package com.loylabs.app_with_composable.ui.screens.first
 
+import androidx.compose.foundation.lazy.LazyListState
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.loylabs.app_with_composable.R
+import com.loylabs.app_with_composable.ui.base.BaseEvent
+import com.loylabs.app_with_composable.ui.base.BaseViewModel
+import com.loylabs.app_with_composable.ui.navigation.AppScreens
 import com.loylabs.app_with_composable.ui.navigation.RouteNavigator
-import com.loylabs.app_with_composable.ui.navigation.SecondScreen
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
@@ -17,8 +20,9 @@ import kotlin.random.Random
 @HiltViewModel
 class FirstScreenViewModel @Inject constructor(
     private val routeNavigator: RouteNavigator
-) : ViewModel(), RouteNavigator by routeNavigator {
+) : BaseViewModel<BaseEvent>(), RouteNavigator by routeNavigator {
 
+    var stateList: LazyListState? = null
     private val title: MutableSharedFlow<String> = MutableStateFlow("Screen first: title 0")
     val flowTitle: Flow<String> = title
 
@@ -33,10 +37,16 @@ class FirstScreenViewModel @Inject constructor(
             }
         }
         viewModelScope.launch {
-            for (i in 1..100) {
+            for (i in 1..20) {
                 simpleItem.value = simpleItem.value + getRand()
-                delay(2000)
+                delay(1000)
             }
+        }
+    }
+
+    override fun onEvent(event: BaseEvent) {
+        when(event) {
+            BaseEvent.Second -> routeNavigator.navigateToRoute(AppScreens.SecondScreen)
         }
     }
 
@@ -47,9 +57,5 @@ class FirstScreenViewModel @Inject constructor(
             description = "Description 3",
             imageRes = R.drawable.ic_launcher_background
         ))
-    }
-
-    fun onEvent() {
-        routeNavigator.navigateToRoute(SecondScreen)
     }
 }

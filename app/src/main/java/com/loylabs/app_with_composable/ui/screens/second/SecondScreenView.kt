@@ -9,16 +9,10 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.navigation.NavController
-import androidx.navigation.compose.rememberNavController
+import com.loylabs.app_with_composable.ui.base.BaseEvent
 import com.loylabs.app_with_composable.ui.common.MyScreenTitle
-import com.loylabs.app_with_composable.ui.common.NavigationButton
 import com.loylabs.app_with_composable.ui.common.PrimaryButton
-import com.loylabs.app_with_composable.ui.navigation.AppScreens
 import com.loylabs.app_with_composable.ui.navigation.MyRouteNavigator
-import com.loylabs.app_with_composable.ui.navigation.NavRoute
-import com.loylabs.app_with_composable.ui.screens.first.FirstScreenViewModel
 import com.loylabs.app_with_composable.ui.theme.ComposeTheme
 
 @Composable
@@ -33,7 +27,7 @@ fun SecondScreen(viewModel: SecondScreenViewModel) {
         verticalArrangement = Arrangement.Bottom
     ) {
         PrimaryButton(
-            viewModel::onEvent,
+            { viewModel.onEvent(BaseEvent.ListCompositeItem) },
             "Test second title"
         )
     }

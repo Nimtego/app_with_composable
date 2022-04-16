@@ -20,7 +20,7 @@ fun NavigationButton(
     Button(
         onClick = {
             Log.i(screen.screenKey, "Navigate to screen 1")
-            viewModel.onEvent()
+            //viewModel.onEvent()
             navController.navigate(screen.screenKey)
         },
         modifier = modifier.fillMaxWidth()

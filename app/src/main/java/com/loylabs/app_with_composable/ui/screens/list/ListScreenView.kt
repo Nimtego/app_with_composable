@@ -1,15 +1,14 @@
-package com.loylabs.app_with_composable.ui.screens.first
+package com.loylabs.app_with_composable.ui.screens.list
 
+import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.State
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -20,19 +19,14 @@ import com.loylabs.app_with_composable.ui.base.BaseEvent
 import com.loylabs.app_with_composable.ui.common.MyScreenTitle
 import com.loylabs.app_with_composable.ui.common.PrimaryButton
 import com.loylabs.app_with_composable.ui.navigation.MyRouteNavigator
+import com.loylabs.app_with_composable.ui.screens.first.SimpleItem
 import com.loylabs.app_with_composable.ui.theme.ComposeTheme
 
+
 @Composable
-fun FirstScreen(viewModel: FirstScreenViewModel) {
-//    val listState: LazyListState = if (screen1ViewModel.stateList == null) {
-//        rememberLazyListState().also {
-//            screen1ViewModel.stateList = it
-//        }
-//    } else {
-//        screen1ViewModel.stateList!!
-//    }
-    val title = viewModel.flowTitle.collectAsState(initial = "")
-    val simpleItem = viewModel.flowSimpleItem.collectAsState(initial = emptyList())
+fun ListScreen(viewModel: ListViewModel) {
+
+    val simpleItem = viewModel.flowCompositeItem.collectAsState(initial = emptyList())
 
     LazyColumn(
         state = rememberLazyListState(),
@@ -40,32 +34,26 @@ fun FirstScreen(viewModel: FirstScreenViewModel) {
         contentPadding = PaddingValues(4.dp)
     ) {
         item {
-            Column(
-                modifier = Modifier
-                    .fillMaxHeight()
-                    .background(Color.LightGray)
-            ) {
-                MyScreenTitle(
-                    title = title.value
-                )
-            }
-        }
-        item {
             Row(
-                modifier = Modifier.fillMaxWidth()
+                modifier = Modifier
+                    .fillMaxWidth()
                     .wrapContentHeight()
                     .padding(vertical = 4.dp),
                 horizontalArrangement = Arrangement.Center,
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 Text(
-                    "Test items for lazy column",
+                    "Test composite items",
                     style = MaterialTheme.typography.h3
                 )
             }
         }
         items(simpleItem.value) { item ->
-            SimpleItem(item.name, item.description, item.imageRes)
+            item.PrepareView()
+//            when(item) {
+//                is Type1Model -> Type1ItemView(item)
+//                is Type2Model -> Type2ItemView(item)
+//            }
         }
 
         item {
@@ -75,8 +63,8 @@ fun FirstScreen(viewModel: FirstScreenViewModel) {
                     .background(Color.LightGray)
             ) {
                 PrimaryButton(
-                    { viewModel.onEvent(BaseEvent.Second) },
-                    "Test first title"
+                    { viewModel.onEvent(BaseEvent.First) },
+                    "Test list title"
                 )
             }
         }
@@ -88,9 +76,9 @@ fun FirstScreen(viewModel: FirstScreenViewModel) {
 
 @Preview(showBackground = true)
 @Composable
-fun SecondScreenPreview() {
+fun ListScreenPreview() {
     ComposeTheme {
-        val viewModel = FirstScreenViewModel(MyRouteNavigator())
-        FirstScreen(viewModel)
+        val viewModel = ListViewModel(MyRouteNavigator())
+        ListScreen(viewModel)
     }
 }
