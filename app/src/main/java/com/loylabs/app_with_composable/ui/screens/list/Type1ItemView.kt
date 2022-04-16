@@ -48,7 +48,7 @@ fun Type1ItemView(type1Model: Type1Model) {
                     state = listState,
                     modifier = Modifier.fillMaxWidth(),
                     contentPadding = PaddingValues(4.dp)) {
-                    items(10) { index ->
+                    items(19) { index ->
                         InnerCardForType1(index)
                     }
                 }

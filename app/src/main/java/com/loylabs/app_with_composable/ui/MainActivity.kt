@@ -6,8 +6,10 @@ import androidx.activity.compose.setContent
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.material.Scaffold
 import androidx.navigation.compose.rememberNavController
+import cafe.adriel.voyager.navigator.Navigator
 import com.loylabs.app_with_composable.ui.navigation.MainNavigationComponent
 import com.loylabs.app_with_composable.ui.theme.ViewModelNavigationComposeTheme
+import com.loylabs.app_with_composable.ui.voyager.SampleScreen
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -16,13 +18,25 @@ class MainActivity : ComponentActivity() {
     @ExperimentalAnimationApi
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+
+        //Voyager
         setContent {
-            val navController = rememberNavController()
-            ViewModelNavigationComposeTheme {
-                Scaffold {
-                    MainNavigationComponent(navController, it)
-                }
-            }
+            Navigator(SampleScreen)
+        }
+
+
+        //Custom solution
+//        setContent {
+//            val navController = rememberNavController()
+//            ViewModelNavigationComposeTheme {
+//                Scaffold {
+//                    MainNavigationComponent(navController, it)
+//                }
+//            }
+//        }
+
+
 //            ComposeTheme {
 //                val navController = rememberNavController()
 //
@@ -43,6 +57,6 @@ class MainActivity : ComponentActivity() {
 //                    }
 //                }
 //            }
-        }
+
     }
 }
