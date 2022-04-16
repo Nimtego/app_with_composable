@@ -39,7 +39,7 @@ class FirstScreenViewModel @Inject constructor(
         viewModelScope.launch {
             for (i in 1..20) {
                 simpleItem.value = simpleItem.value + getRand()
-                delay(1000)
+                delay(200)
             }
         }
     }

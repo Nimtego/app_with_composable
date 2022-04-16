@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
@@ -26,10 +27,13 @@ import com.loylabs.app_with_composable.ui.theme.ComposeTheme
 @Composable
 fun ListScreen(viewModel: ListViewModel) {
 
+    val scrollState = rememberScrollState()
+    val listState = rememberLazyListState()
+
     val simpleItem = viewModel.flowCompositeItem.collectAsState(initial = emptyList())
 
     LazyColumn(
-        state = rememberLazyListState(),
+        state = listState,
         modifier = Modifier.fillMaxWidth(),
         contentPadding = PaddingValues(4.dp)
     ) {
@@ -48,6 +52,7 @@ fun ListScreen(viewModel: ListViewModel) {
                 )
             }
         }
+
         items(simpleItem.value) { item ->
             item.PrepareView()
 //            when(item) {
